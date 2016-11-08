@@ -2,13 +2,66 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
-	<title>Example of Time Telling</title>
+	<title>All Aboard</title>
+<link href="https://fonts.googleapis.com/css?family=Sigmar+One" rel="stylesheet">
 <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
 <link rel="stylesheet" type="text/css" href="traincss.css">
-	<!-- Added Moment JS -->
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+	
  	<script src="https://cdn.jsdelivr.net/momentjs/2.12.0/moment.min.js"></script>
 </head>
 <body>
+
+<div class="container">
+	
+	<div id="head">
+	<h1 class="header">ALL ABOARD</h1>
+	<p class="toot">TOOT TOOT!</p>
+	</div>
+	<div id="jumbotron" class="numeroUno">
+<div class="panel-body" id="recentMember">
+					<h2 id="namedisplay"></h2>
+					<h4 id="emaildisplay"></h4>
+					<h4 id="agedisplay"></h4>
+					<p id="commentdisplay"></p>
+				</div>
+</div>
+
+
+
+<div id="jumbotron" class="numeroDos">
+	
+<form>
+<div class="table">
+<h1 class="destination">Search for your train here Pilgrim</h1>
+  <div class="form-group">
+    
+    <input type="text" class="form-control" id="inputTrainName" placeholder="Train Name">
+  </div>
+  <div class="form-group">
+    
+    <input type="text" class="form-control" id="inputDestination" placeholder="Destination">
+  </div>
+  <div class="form-group">
+    
+    <input type="date-time" class="form-control" id="firstTrainTime" placeholder="First Train Time">
+  </div>
+  <div class="form-group">
+    
+    <input type="text" class="form-control" id="inputFrequency" placeholder="Frequency">
+  </div>
+
+  <button type="submit" class="btn btn-default">Submit</button>
+  </div>
+</form>
+
+
+</div>
+</div>
+
+
 	<script>
 		// Assume the following situations.
 
@@ -69,6 +122,72 @@
 		// Next Train
 		var nextTrain = moment().add(tMinutesTillTrain, "minutes")
 		console.log("ARRIVAL TIME: " + moment(nextTrain).format("hh:mm"))
+	
+	var config = {
+	apiKey: "AIzaSyA5eYKsB8T2q6rMGdKSvac6eQsWTzsZEjE",
+	authDomain: "fir-recent-user.firebaseapp.com",
+	databaseURL: "https://fir-recent-user.firebaseio.com",
+	storageBucket: "fir-recent-user.appspot.com",
+};
+
+firebase.initializeApp(config);
+
+// Create a variable to reference the database
+var database = firebase.database();
+
+// Initial Values
+var trainName = "";
+var firstTrainTime = 0;
+var destination = "";
+var frequency = "";
+
+$("#addUser").on("click", function() {
+
+	// YOUR TASK!!!
+	// Code in the logic for storing and retrieving the most recent user.
+	// Dont forget to provide initial data to your Firebase database.
+
+	name = $('#inputTrainName').val().trim();
+	email = $('#inputTrainName').val().trim();
+	
+	 age = $('#inputDestination').val().trim();
+	comment = $('#frequency').val().trim();
+
+	database.ref().set({
+			name: name,
+		email: email,
+		age: age,
+		comment: comment
+	});
+	
+
+	// Don't refresh the page!
+	return false;
+});
+
+database.ref().on("value", function(snapshot) {
+
+	// Log everything that's coming out of snapshot
+	console.log(snapshot.val());
+	console.log(snapshot.val().name);
+	console.log(snapshot.val().email);
+	console.log(snapshot.val().age);
+	console.log(snapshot.val().comment);
+
+	// Change the HTML to reflect
+	$("#namedisplay").html(snapshot.val().name);
+	$("#emaildisplay").html(snapshot.val().email);
+	$("#agedisplay").html(snapshot.val().age);
+	$("#commentdisplay").html(snapshot.val().comment);
+
+
+// Handle the errors
+}, function(errorObject) {
+
+	console.log("Errors handled: " + errorObject.code);
+});
+
 	</script>
+
 </body>
 </html>
