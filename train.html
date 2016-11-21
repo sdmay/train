@@ -24,12 +24,13 @@
 	</div>
 	<div id="jumbotron" class="numeroUno">
 <div class="panel-body" id="recentMember">
-<ul>
-			<li id="trainInfo"></li>
+
 					<h2 id="namedisplay"></h2>
 					<h4 id="emaildisplay"></h4>
 					<h4 id="agedisplay"></h4>
-					<p id="commentdisplay"></p></ul>
+					<p id="commentdisplay"></p>
+					<ul>
+			<li id="trainInfo"></li></ul>
 				</div>
 </div>
 
@@ -65,7 +66,7 @@
 
 </div>
 </div>
-
+<script src="https://www.gstatic.com/firebasejs/3.6.1/firebase.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 	<script>
 		
@@ -96,14 +97,19 @@
 		console.log("ARRIVAL TIME: " + moment(nextTrain).format("hh:mm"))
 		$("#agedisplay").append("ARRIVAL TIME: " + moment(nextTrain).format("hh:mm"));
 	
-	var config = {
-	apiKey: "AIzaSyA5eYKsB8T2q6rMGdKSvac6eQsWTzsZEjE",
-	authDomain: "fir-recent-user.firebaseapp.com",
-	databaseURL: "https://fir-recent-user.firebaseio.com",
-	storageBucket: "fir-recent-user.appspot.com",
-};
 
-firebase.initializeApp(config);
+
+
+  // Initialize Firebase
+  var config = {
+    apiKey: "AIzaSyBPgCu7Y-TvuvZBtxG96rarKlpNb6EZgMs",
+    authDomain: "train-7079b.firebaseapp.com",
+    databaseURL: "https://train-7079b.firebaseio.com",
+    storageBucket: "train-7079b.appspot.com",
+    messagingSenderId: "1086227013276"
+  };
+  firebase.initializeApp(config);
+
 
 // Create a variable to reference the database
 var database = firebase.database();
@@ -121,16 +127,16 @@ $("#addUser").on("click", function() {
 	// Dont forget to provide initial data to your Firebase database.
 
 	name = $('#inputTrainName').val().trim();
-	email = $('#inputTrainName').val().trim();
+	email = $('#inputDestination').val().trim();
 	
-	 age = $('#inputDestination').val().trim();
+	 age = $('firstTrainTime').val().trim();
 	comment = $('#frequency').val().trim();
 
 	database.ref().set({
 			name: name,
-		email: email,
-		age: age,
-		comment: comment
+			email: email,
+			age: age,
+			comment: comment
 	});
 	
 
@@ -148,10 +154,10 @@ database.ref().on("value", function(snapshot) {
 	console.log(snapshot.val().comment);
 
 	// Change the HTML to reflect
-	$("#namedisplay").append(snapshot.val().name);
-	$("#emaildisplay").append(snapshot.val().email);
-	$("#agedisplay").append(snapshot.val().age);
-	$("#commentdisplay").append(snapshot.val().comment);
+	$("#trainInfo").append(snapshot.val().name);
+	$("#trainInfo").append(snapshot.val().email);
+	$("#trainInfo").append(snapshot.val().age);
+	$("#trainInfo").append(snapshot.val().comment);
 
 
 // Handle the errors
