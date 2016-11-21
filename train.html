@@ -30,7 +30,7 @@
 					<h4 id="arrvdisplay"></h4>
 					<p id="commentdisplay"></p>
 					<ul>
-			<li id="trainInfo"></li></ul>
+			<li id="trainInfo"></li><br><br></ul>
 				</div>
 </div>
 
@@ -133,7 +133,7 @@ $("#addTrain").on("click", function addTraintoDatabase() {
 
 	console.log(trainName)
 
-	database.ref("train").set({
+	database.ref("train").push({
 			trainName: trainName,
 			destination: destination,
 			firstTrainTime: firstTrainTime,
@@ -148,33 +148,37 @@ $("#addTrain").on("click", function addTraintoDatabase() {
 database.ref("train").on("value", function(snapshot) {
 
 var leadsRef = database.ref('train');
+
 leadsRef.on('value', function(snapshot) {
     snapshot.forEach(function(childSnapshot) {
       var childData = childSnapshot.val();
 	  console.log(childData)
-	  $("#trainInfo").append(childData);
+	  $("#trainInfo").prepend(childData.trainName);
+	  $("#trainInfo").prepend(childData.destination);
+	  $("#trainInfo").prepend(childData.firstTrainTime);
+	  $("#trainInfo").prepend(childData.frequency);
     });
 });
 
 	// Log everything that's coming out of snapshot
-	console.log(snapshot.val());
+	// console.log(snapshot.val());
 	// console.log(snapshot.val().trainName);
 	// console.log(snapshot.val().destination);
 	// console.log(snapshot.val().firstTrainTime);
 	// console.log(snapshot.val().frequency);
 
 	
-	$("#trainInfo").append(snapshot.val().trainName);
-	$("#trainInfo").append(snapshot.val().destination);
-	$("#trainInfo").append(snapshot.val().firstTrainTime);
-	$("#trainInfo").append(snapshot.val().frequency);
+	// $("#trainInfo").append(snapshot.val().trainName);
+	// $("#trainInfo").append(snapshot.val().destination);
+	// $("#trainInfo").append(snapshot.val().firstTrainTime);
+	// $("#trainInfo").append(snapshot.val().frequency);
 
 	// var currentTime = moment();
 	// console.log(currentTime.format("hh:mm"))
 	// if(currentTime >= firstTrainTime){
 	// 	$(this).closest("li").remove();
 	// }
-
+	
 
 
 	
