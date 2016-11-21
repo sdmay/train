@@ -5,6 +5,16 @@
 	<title>All Aboard</title>
 	<link rel="stylesheet" type="text/css" href="reset.css">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<style>
+
+#traiInfo {
+	
+
+}
+
+</style>
+
 <link href="https://fonts.googleapis.com/css?family=Sigmar+One" rel="stylesheet">
 <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 
@@ -29,8 +39,8 @@
 					<h4 id="destdisplay"></h4>
 					<h4 id="arrvdisplay"></h4>
 					<p id="commentdisplay"></p>
-					<ul>
-			<li id="trainInfo"></li><br><br></ul>
+					<ul class = "list-unstyled">
+			<li id= "trainInfo" ></li><br><br></ul>
 				</div>
 </div>
 
@@ -153,10 +163,19 @@ leadsRef.on('value', function(snapshot) {
     snapshot.forEach(function(childSnapshot) {
       var childData = childSnapshot.val();
 	  console.log(childData)
-	  $("#trainInfo").prepend(childData.trainName);
-	  $("#trainInfo").prepend(childData.destination);
-	  $("#trainInfo").prepend(childData.firstTrainTime);
-	  $("#trainInfo").prepend(childData.frequency);
+
+	  var newListItem = $("<li>");
+	  newListItem.addClass("list-group-item");
+	  newListItem.attr('id', childData);
+	  newListItem.text(leadsRef);
+
+	  $("#trainInfo").prepend(newListItem);
+	 
+	//  $("#trainInfo").prepend(childData.frequency);
+	//   $("#trainInfo").prepend(childData.firstTrainTime);
+	 
+	//     $("#trainInfo").prepend(childData.destination);
+	//    $("#trainInfo").prepend(childData.trainName);
     });
 });
 
