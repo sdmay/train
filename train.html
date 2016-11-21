@@ -111,7 +111,7 @@
   };
   firebase.initializeApp(config);
 
-
+var ref = firebase.database();
 // Create a variable to reference the database
 var database = firebase.database();
 
@@ -123,7 +123,7 @@ var destination = "";
 var firstTrainTime = 0;
 var frequency = "";
 
-$("#addTrain").on("click", function() {
+$("#addTrain").on("click", function addTraintoDatabase() {
 
 
 	trainName = $('#inputTrainName').val().trim();
@@ -144,9 +144,17 @@ $("#addTrain").on("click", function() {
 	return false;
 });
 
-var child = key;
 
 database.ref("train").on("value", function(snapshot) {
+
+var leadsRef = database.ref('train');
+leadsRef.on('value', function(snapshot) {
+    snapshot.forEach(function(childSnapshot) {
+      var childData = childSnapshot.val();
+	  console.log(childData)
+	  $("#trainInfo").append(childData);
+    });
+});
 
 	// Log everything that's coming out of snapshot
 	console.log(snapshot.val());
