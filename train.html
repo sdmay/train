@@ -70,7 +70,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 	<script>
 		
-		var tFrequency = 3;
+		var tFrequency = 7;
 		var firstTime = "03:30"; // Time is 3:30 AM
 
 		
@@ -122,14 +122,11 @@ var frequency = "";
 
 $("#addUser").on("click", function() {
 
-	// YOUR TASK!!!
-	// Code in the logic for storing and retrieving the most recent user.
-	// Dont forget to provide initial data to your Firebase database.
 
 	name = $('#inputTrainName').val().trim();
 	email = $('#inputDestination').val().trim();
 	
-	 age = $('firstTrainTime').val().trim();
+	 age = $('#firstTrainTime').val().trim();
 	comment = $('#frequency').val().trim();
 
 	database.ref().set({
@@ -140,7 +137,6 @@ $("#addUser").on("click", function() {
 	});
 	
 
-	// Don't refresh the page!
 	return false;
 });
 
@@ -154,13 +150,16 @@ database.ref().on("value", function(snapshot) {
 	console.log(snapshot.val().comment);
 
 	// Change the HTML to reflect
-	$("#trainInfo").append(snapshot.val().name);
-	$("#trainInfo").append(snapshot.val().email);
-	$("#trainInfo").append(snapshot.val().age);
-	$("#trainInfo").append(snapshot.val().comment);
+	// $("#trainInfo").append(snapshot.val().name);
+	// $("#trainInfo").append(snapshot.val().email);
+	// $("#trainInfo").append(snapshot.val().age);
+	// $("#trainInfo").append(snapshot.val().comment);
 
+	$("#trainInfo").append(name);
+	$("#trainInfo").append(email);
+	$("#trainInfo").append(age);
+	$("#trainInfo").append(comment);
 
-// Handle the errors
 }, function(errorObject) {
 
 	console.log("Errors handled: " + errorObject.code);
