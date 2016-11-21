@@ -74,6 +74,7 @@
 		var firstTime = "03:30"; // Time is 3:30 AM
 
 		
+		
 		var firstTimeConverted = moment(firstTime,"hh:mm").subtract(1, "years");
 		console.log(firstTimeConverted);
 
@@ -98,7 +99,7 @@
 		$("#arrvdisplay").append("ARRIVAL TIME: " + moment(nextTrain).format("hh:mm"));
 	
 
-
+	
 
   // Initialize Firebase
   var config = {
@@ -114,10 +115,12 @@
 // Create a variable to reference the database
 var database = firebase.database();
 
+var key = database.key;
+
 // Initial Values
 var trainName = "";
-var firstTrainTime = 0;
 var destination = "";
+var firstTrainTime = 0;
 var frequency = "";
 
 $("#addTrain").on("click", function() {
@@ -125,11 +128,12 @@ $("#addTrain").on("click", function() {
 
 	trainName = $('#inputTrainName').val().trim();
 	destination = $('#inputDestination').val().trim();
-	
-	 firstTrainTime = $('#firstTrainTime').val().trim();
-	frequency = $('#frequency').val().trim();
+	firstTrainTime = $('#firstTrainTime').val().trim();
+	frequency = $('#inputFrequency').val().trim();
 
-	database.ref().set({
+	console.log(trainName)
+
+	database.ref("train").set({
 			trainName: trainName,
 			destination: destination,
 			firstTrainTime: firstTrainTime,
@@ -140,7 +144,7 @@ $("#addTrain").on("click", function() {
 	return false;
 });
 
-database.ref().on("value", function(snapshot) {
+database.ref("train").on("value", function(snapshot) {
 
 	// Log everything that's coming out of snapshot
 	console.log(snapshot.val());
@@ -149,16 +153,18 @@ database.ref().on("value", function(snapshot) {
 	console.log(snapshot.val().firstTrainTime);
 	console.log(snapshot.val().frequency);
 
-	// Change the HTML to reflect
+	
 	$("#trainInfo").append(snapshot.val().trainName);
 	$("#trainInfo").append(snapshot.val().destination);
 	$("#trainInfo").append(snapshot.val().firstTrainTime);
 	$("#trainInfo").append(snapshot.val().frequency);
 
-	$("#trainInfo").append(trainName);
-	$("#trainInfo").append(destination);
-	$("#trainInfo").append(firstTrainTime);
-	$("#trainInfo").append(frequency);
+	
+
+	// $("#trainInfo").append(trainName);
+	// $("#trainInfo").append(destination);
+	// $("#trainInfo").append(firstTrainTime);
+	// $("#trainInfo").append(frequency);
 
 }, function(errorObject) {
 
