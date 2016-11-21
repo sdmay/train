@@ -24,10 +24,12 @@
 	</div>
 	<div id="jumbotron" class="numeroUno">
 <div class="panel-body" id="recentMember">
+<ul>
+			<li id="trainInfo"></li>
 					<h2 id="namedisplay"></h2>
 					<h4 id="emaildisplay"></h4>
 					<h4 id="agedisplay"></h4>
-					<p id="commentdisplay"></p>
+					<p id="commentdisplay"></p></ul>
 				</div>
 </div>
 
@@ -35,9 +37,10 @@
 
 <div id="jumbotron" class="numeroDos">
 	
+	
 <form>
 <div class="table">
-<h1 class="destination">Search for your train here Pilgrim</h1>
+<h1 class="destination">Enter your train here Pilgrim</h1>
   <div class="form-group">
     
     <input type="text" class="form-control" id="inputTrainName" placeholder="Train Name">
@@ -55,7 +58,7 @@
     <input type="text" class="form-control" id="inputFrequency" placeholder="Frequency">
   </div>
 
-  <button type="submit" class="btn btn-default">Submit</button>
+  <button type="submit" id="addUser" class="btn btn-default">Submit</button>
   </div>
 </form>
 
@@ -63,7 +66,7 @@
 </div>
 </div>
 
-
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 	<script>
 		
 		var tFrequency = 3;
@@ -76,18 +79,22 @@
 		
 		var currentTime = moment();
 		console.log("CURRENT TIME: " + moment(currentTime).format("hh:mm"));
+		$("#namedisplay").append("CURRENT TIME: " + moment(currentTime).format("hh:mm"));
 
 		
 		var diffTime = moment().diff(moment(firstTimeConverted), "minutes");
 
 		var tRemainder = diffTime % tFrequency;
 		console.log(tRemainder);
+		
 
 		var tMinutesTillTrain = tFrequency - tRemainder;
 		console.log("MINUTES TILL TRAIN: " + tMinutesTillTrain);
+		$("#emaildisplay").append("MINUTES TILL TRAIN: " + tMinutesTillTrain)
 
 		var nextTrain = moment().add(tMinutesTillTrain, "minutes")
 		console.log("ARRIVAL TIME: " + moment(nextTrain).format("hh:mm"))
+		$("#agedisplay").append("ARRIVAL TIME: " + moment(nextTrain).format("hh:mm"));
 	
 	var config = {
 	apiKey: "AIzaSyA5eYKsB8T2q6rMGdKSvac6eQsWTzsZEjE",
@@ -141,10 +148,10 @@ database.ref().on("value", function(snapshot) {
 	console.log(snapshot.val().comment);
 
 	// Change the HTML to reflect
-	$("#namedisplay").html(snapshot.val().name);
-	$("#emaildisplay").html(snapshot.val().email);
-	$("#agedisplay").html(snapshot.val().age);
-	$("#commentdisplay").html(snapshot.val().comment);
+	$("#namedisplay").append(snapshot.val().name);
+	$("#emaildisplay").append(snapshot.val().email);
+	$("#agedisplay").append(snapshot.val().age);
+	$("#commentdisplay").append(snapshot.val().comment);
 
 
 // Handle the errors
