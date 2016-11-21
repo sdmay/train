@@ -123,17 +123,17 @@ var frequency = "";
 $("#addUser").on("click", function() {
 
 
-	name = $('#inputTrainName').val().trim();
-	email = $('#inputDestination').val().trim();
+	trainName = $('#inputTrainName').val().trim();
+	destination = $('#inputDestination').val().trim();
 	
-	 age = $('#firstTrainTime').val().trim();
-	comment = $('#frequency').val().trim();
+	 firstTrainTime = $('#firstTrainTime').val().trim();
+	frequency = $('#frequency').val().trim();
 
-	database.ref().set({
-			name: name,
-			email: email,
-			age: age,
-			comment: comment
+	database.ref(trainName).set({
+			trainName: trainName,
+			destination: destination,
+			firstTrainTime: firstTrainTime,
+			frequency: frequency
 	});
 	
 
@@ -144,21 +144,21 @@ database.ref().on("value", function(snapshot) {
 
 	// Log everything that's coming out of snapshot
 	console.log(snapshot.val());
-	console.log(snapshot.val().name);
-	console.log(snapshot.val().email);
-	console.log(snapshot.val().age);
-	console.log(snapshot.val().comment);
+	console.log(snapshot.val().trainName);
+	console.log(snapshot.val().destination);
+	console.log(snapshot.val().firstTrainTime);
+	console.log(snapshot.val().frequency);
 
 	// Change the HTML to reflect
-	// $("#trainInfo").append(snapshot.val().name);
-	// $("#trainInfo").append(snapshot.val().email);
-	// $("#trainInfo").append(snapshot.val().age);
-	// $("#trainInfo").append(snapshot.val().comment);
+	$("#trainInfo").append(snapshot.val().trainName);
+	$("#trainInfo").append(snapshot.val().destination);
+	$("#trainInfo").append(snapshot.val().firstTrainTime);
+	$("#trainInfo").append(snapshot.val().frequency);
 
-	$("#trainInfo").append(name);
-	$("#trainInfo").append(email);
-	$("#trainInfo").append(age);
-	$("#trainInfo").append(comment);
+	$("#trainInfo").append(trainName);
+	$("#trainInfo").append(destination);
+	$("#trainInfo").append(firstTrainTime);
+	$("#trainInfo").append(frequency);
 
 }, function(errorObject) {
 
