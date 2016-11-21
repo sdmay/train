@@ -26,8 +26,8 @@
 <div class="panel-body" id="recentMember">
 
 					<h2 id="namedisplay"></h2>
-					<h4 id="emaildisplay"></h4>
-					<h4 id="agedisplay"></h4>
+					<h4 id="destdisplay"></h4>
+					<h4 id="arrvdisplay"></h4>
 					<p id="commentdisplay"></p>
 					<ul>
 			<li id="trainInfo"></li></ul>
@@ -59,7 +59,7 @@
     <input type="text" class="form-control" id="inputFrequency" placeholder="Frequency">
   </div>
 
-  <button type="submit" id="addUser" class="btn btn-default">Submit</button>
+  <button type="submit" id="addTrain" class="btn btn-default">TOOT</button>
   </div>
 </form>
 
@@ -91,11 +91,11 @@
 
 		var tMinutesTillTrain = tFrequency - tRemainder;
 		console.log("MINUTES TILL TRAIN: " + tMinutesTillTrain);
-		$("#emaildisplay").append("MINUTES TILL TRAIN: " + tMinutesTillTrain)
+		$("#destdisplay").append("MINUTES TILL TRAIN: " + tMinutesTillTrain)
 
 		var nextTrain = moment().add(tMinutesTillTrain, "minutes")
 		console.log("ARRIVAL TIME: " + moment(nextTrain).format("hh:mm"))
-		$("#agedisplay").append("ARRIVAL TIME: " + moment(nextTrain).format("hh:mm"));
+		$("#arrvdisplay").append("ARRIVAL TIME: " + moment(nextTrain).format("hh:mm"));
 	
 
 
@@ -120,7 +120,7 @@ var firstTrainTime = 0;
 var destination = "";
 var frequency = "";
 
-$("#addUser").on("click", function() {
+$("#addTrain").on("click", function() {
 
 
 	trainName = $('#inputTrainName').val().trim();
@@ -129,7 +129,7 @@ $("#addUser").on("click", function() {
 	 firstTrainTime = $('#firstTrainTime').val().trim();
 	frequency = $('#frequency').val().trim();
 
-	database.ref(trainName).set({
+	database.ref().set({
 			trainName: trainName,
 			destination: destination,
 			firstTrainTime: firstTrainTime,
